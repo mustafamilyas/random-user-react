@@ -53,7 +53,13 @@ export const UserDataProvider: FC = (props) => {
     } catch (error) {
       console.warn(error);
     }
-  }, [filter.gender]);
+  }, [
+    filter.gender,
+    filter.page,
+    filter.pageSize,
+    filter.sortBy,
+    filter.sortOrder,
+  ]);
 
   const value = { data, filter, refetch, setFilter, resetFilter };
 
