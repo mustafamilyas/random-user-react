@@ -26,7 +26,7 @@ export const UserDataProvider: FC = (props) => {
   const [data, setData] = useState<UserData[]>([]);
   const [filter, _setFilter] = useState<FilterUserData>({
     page: 1,
-    perPage: 5,
+    pageSize: 5,
   });
 
   const setFilter = (data: Partial<FilterUserData>) => {

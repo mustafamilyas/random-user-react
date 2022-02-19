@@ -35,7 +35,7 @@ export interface FilterUserData {
   keyword?: string;
   gender?: Gender;
   page: number;
-  perPage: number;
+  pageSize: number;
   sortBy?: string;
   sortOrder?: SortOrder;
 }

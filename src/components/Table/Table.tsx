@@ -22,6 +22,7 @@ import { headCells } from "./constants";
 import { getComparator } from "../../utils/getComparator";
 import { UserData, Order } from "../../utils/interface";
 import { stableSort } from "../../utils/stableSort";
+import { useUserData } from "../../pages/UserDataPage/helpers/UserDataProvider";
 
 interface EnhancedTableProps {
   numSelected: number;
@@ -154,8 +155,13 @@ export const EnhancedTable: FC<Props> = ({ rows }) => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof UserData>("username");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { filter, setFilter } = useUserData();
+
+  const page = filter.page - 1;
+  const rowsPerPage = filter.pageSize;
+  const setPage = (_page: number) => setFilter({ page: _page + 1 });
+  const setRowsPerPage = (_rowsPerPage: number) =>
+    setFilter({ pageSize: _rowsPerPage });
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
