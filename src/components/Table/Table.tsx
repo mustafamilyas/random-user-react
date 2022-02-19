@@ -23,6 +23,7 @@ import { getComparator } from "../../utils/getComparator";
 import { UserData, SortOrder } from "../../utils/interface";
 import { stableSort } from "../../utils/stableSort";
 import { useUserData } from "../../pages/UserDataPage/helpers/UserDataProvider";
+import spacetime from "spacetime";
 
 interface EnhancedTableProps {
   numSelected: number;
@@ -278,7 +279,9 @@ export const EnhancedTable: FC<Props> = ({ rows }) => {
                       <TableCell>{row.name}</TableCell>
                       <TableCell>{row.email}</TableCell>
                       <TableCell>{row.gender}</TableCell>
-                      <TableCell>{row.registered}</TableCell>
+                      <TableCell>
+                        {spacetime(row.registered).format("nice-full")}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
