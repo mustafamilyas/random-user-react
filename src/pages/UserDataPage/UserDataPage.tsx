@@ -9,10 +9,9 @@ import {
   TextField,
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
-import { useEffect, useState } from "react";
 import { EnhancedTable } from "../../components/Table/Table";
-import { getUserData } from "../../hooks/getUserData";
-import { Gender, UserData } from "../../utils/interface";
+import { Gender } from "../../utils/interface";
+import { useUserData } from "./helpers/UserDataProvider";
 
 const useStyles = makeStyles(
   () => ({
@@ -23,31 +22,20 @@ const useStyles = makeStyles(
       gap: "1rem",
     },
     selectGender: {
-      minWidth: "10rem",
+      "&&": {
+        minWidth: "10rem",
+      },
     },
   }),
   { classNamePrefix: "UserData" }
 );
 
 export function UserDataPage() {
-  const [users, setUsers] = useState<UserData[]>([]);
-  const [gender, setGender] = useState("");
   const styles = useStyles();
-
-  useEffect(() => {
-    const setupUserData = async () => {
-      const response = await getUserData();
-      setUsers(response);
-    };
-    try {
-      setupUserData();
-    } catch (error) {
-      console.warn(error);
-    }
-  }, []);
+  const { data: users } = useUserData();
 
   return (
-    <form className={styles.body} action="/">
+    <div className={styles.body}>
       <div className={styles.inputGroup}>
         <TextField
           id="outlined-basic"
@@ -64,9 +52,7 @@ export function UserDataPage() {
             labelId="gender-select"
             id="gender-select"
             name="gender"
-            value={gender}
             label="Gender"
-            onChange={(e) => setGender(e.target.value)}
           >
             <MenuItem value={Gender.FEMALE}>{Gender.FEMALE}</MenuItem>
             <MenuItem value={Gender.MALE}>{Gender.MALE}</MenuItem>
@@ -78,6 +64,6 @@ export function UserDataPage() {
         </Button>
       </div>
       <EnhancedTable rows={users} />
-    </form>
+    </div>
   );
 }

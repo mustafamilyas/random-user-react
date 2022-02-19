@@ -1,10 +1,13 @@
 import React from "react";
 import { UserDataPage } from "./pages/UserDataPage";
+import { UserDataProvider } from "./pages/UserDataPage/helpers/UserDataProvider";
 
 function App() {
   return (
     <div className="App">
-      <UserDataPage />
+      <UserDataProvider>
+        <UserDataPage />
+      </UserDataProvider>
     </div>
   );
 }
