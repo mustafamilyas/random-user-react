@@ -1,22 +1,12 @@
 import { createContext, FC, useContext, useState, useEffect } from "react";
-import { Gender, UserData } from "../../../utils/interface";
+import { FilterUserData, Gender, UserData } from "../../../utils/interface";
 import { getUserData } from "./getUserData";
-
-export type SortOrder = "ascend" | "descend";
-
-interface FilterUserData {
-  keyword?: string;
-  gender?: Gender;
-  page: number;
-  perPage: number;
-  sortBy?: string;
-  sortOrder?: SortOrder;
-}
 
 interface UserDataContextValue {
   data: UserData[];
   filter: FilterUserData;
   refetch: () => Promise<void>;
+  resetFilter: VoidFunction;
   setFilter: (data: Partial<FilterUserData>) => void;
 }
 
@@ -44,8 +34,17 @@ export const UserDataProvider: FC = (props) => {
   };
 
   const refetch = async () => {
-    const response = await getUserData();
+    const response = await getUserData(filter);
     setData(response);
+  };
+
+  const resetFilter = () => {
+    setFilter({
+      keyword: "",
+      gender: Gender.ALL,
+      sortBy: undefined,
+      sortOrder: undefined,
+    });
   };
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export const UserDataProvider: FC = (props) => {
     }
   }, [filter.gender]);
 
-  const value = { data, filter, refetch, setFilter };
+  const value = { data, filter, refetch, setFilter, resetFilter };
 
   return <UserDataContext.Provider value={value} {...props} />;
 };

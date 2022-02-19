@@ -32,7 +32,13 @@ const useStyles = makeStyles(
 
 export function UserDataPage() {
   const styles = useStyles();
-  const { data: users } = useUserData();
+  const {
+    data: users,
+    filter,
+    refetch,
+    resetFilter,
+    setFilter,
+  } = useUserData();
 
   return (
     <div className={styles.body}>
@@ -42,8 +48,10 @@ export function UserDataPage() {
           name="keyword"
           label="Keyword"
           variant="outlined"
+          value={filter.keyword}
+          onChange={(event) => setFilter({ keyword: event.target.value })}
         />
-        <Button variant="contained" endIcon={<SearchIcon />} type="submit">
+        <Button variant="contained" endIcon={<SearchIcon />} onClick={refetch}>
           Send
         </Button>
         <FormControl className={styles.selectGender}>
@@ -53,13 +61,21 @@ export function UserDataPage() {
             id="gender-select"
             name="gender"
             label="Gender"
+            value={filter.gender}
+            onChange={(event) =>
+              setFilter({ gender: event.target.value as Gender })
+            }
           >
             <MenuItem value={Gender.FEMALE}>{Gender.FEMALE}</MenuItem>
             <MenuItem value={Gender.MALE}>{Gender.MALE}</MenuItem>
           </Select>
         </FormControl>
 
-        <Button variant="outlined" endIcon={<RestartAltIcon />}>
+        <Button
+          variant="outlined"
+          endIcon={<RestartAltIcon />}
+          onClick={resetFilter}
+        >
           Reset Filter
         </Button>
       </div>

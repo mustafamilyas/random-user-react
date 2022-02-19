@@ -1,8 +1,10 @@
 export type Order = "asc" | "desc";
+export type SortOrder = "ascend" | "descend";
 
 export enum Gender {
   FEMALE = "female",
   MALE = "male",
+  ALL = "all",
 }
 
 export interface UserData {
@@ -27,4 +29,13 @@ export interface ResponseUserData {
     sha256: string;
   };
   registered: { date: string; age: number };
+}
+
+export interface FilterUserData {
+  keyword?: string;
+  gender?: Gender;
+  page: number;
+  perPage: number;
+  sortBy?: string;
+  sortOrder?: SortOrder;
 }
