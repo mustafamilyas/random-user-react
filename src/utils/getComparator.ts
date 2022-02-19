@@ -1,14 +1,14 @@
 import { descendingComparator } from "./descendingComparator";
-import { Order } from "./interface";
+import { SortOrder } from "./interface";
 
 export function getComparator<Key extends keyof any>(
-  order: Order,
+  order: SortOrder,
   orderBy: Key
 ): (
   a: { [key in Key]: number | string },
   b: { [key in Key]: number | string }
 ) => number {
-  return order === "desc"
+  return order === SortOrder.DSC
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }

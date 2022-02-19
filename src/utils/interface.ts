@@ -1,5 +1,7 @@
-export type Order = "asc" | "desc";
-export type SortOrder = "ascend" | "descend";
+export enum SortOrder {
+  ASC = "asc",
+  DSC = "desc",
+}
 
 export enum Gender {
   FEMALE = "female",

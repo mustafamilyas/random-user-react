@@ -20,7 +20,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { headCells } from "./constants";
 import { getComparator } from "../../utils/getComparator";
-import { UserData, Order } from "../../utils/interface";
+import { UserData, SortOrder } from "../../utils/interface";
 import { stableSort } from "../../utils/stableSort";
 import { useUserData } from "../../pages/UserDataPage/helpers/UserDataProvider";
 
@@ -31,7 +31,7 @@ interface EnhancedTableProps {
     property: keyof UserData
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  order: Order;
+  order: SortOrder;
   orderBy: string;
   rowCount: number;
 }
@@ -60,7 +60,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              "aria-label": "select all users",
             }}
           />
         </TableCell>
@@ -73,7 +73,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
+              direction={orderBy === headCell.id ? order : SortOrder.ASC}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
@@ -152,7 +152,7 @@ interface Props {
 }
 
 export const EnhancedTable: FC<Props> = ({ rows }) => {
-  const [order, setOrder] = React.useState<Order>("asc");
+  const [order, setOrder] = React.useState<SortOrder>(SortOrder.ASC);
   const [orderBy, setOrderBy] = React.useState<keyof UserData>("username");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const { filter, setFilter } = useUserData();
@@ -167,8 +167,8 @@ export const EnhancedTable: FC<Props> = ({ rows }) => {
     event: React.MouseEvent<unknown>,
     property: keyof UserData
   ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === SortOrder.ASC;
+    setOrder(isAsc ? SortOrder.DSC : SortOrder.ASC);
     setOrderBy(property);
   };
 
