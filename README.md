@@ -4,6 +4,8 @@ a test project using react
 
 ## Setup Environment
 
+---
+
 1. Use recommended npm using [nvm](https://github.com/nvm-sh/nvm):
 
 ```sh
@@ -28,14 +30,21 @@ npm start
 
 ## Demo
 
+---
+
 [Random user site](https://vigilant-lovelace-08222b.netlify.app/)
 
-# Documentation
+## Documentation
+
+---
 
 - [Random User API](https://randomuser.me/documentation)
 
-# Todos
+## Todos
 
+---
+
+- [ ] add loading component
 - [ ] tidy up table component
 - [ ] move environment variable into `.env`
 - [ ] configure prettier and eslint
