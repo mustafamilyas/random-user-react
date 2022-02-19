@@ -38,6 +38,6 @@ export interface FilterUserData {
   gender?: Gender;
   page: number;
   pageSize: number;
-  sortBy?: string;
-  sortOrder?: SortOrder;
+  sortBy: keyof UserData;
+  sortOrder: SortOrder;
 }

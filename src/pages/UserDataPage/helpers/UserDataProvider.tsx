@@ -1,5 +1,10 @@
 import { createContext, FC, useContext, useState, useEffect } from "react";
-import { FilterUserData, Gender, UserData } from "../../../utils/interface";
+import {
+  FilterUserData,
+  Gender,
+  SortOrder,
+  UserData,
+} from "../../../utils/interface";
 import { getUserData } from "./getUserData";
 
 interface UserDataContextValue {
@@ -27,6 +32,8 @@ export const UserDataProvider: FC = (props) => {
   const [filter, _setFilter] = useState<FilterUserData>({
     page: 1,
     pageSize: 5,
+    sortBy: "username",
+    sortOrder: SortOrder.ASC,
   });
 
   const setFilter = (data: Partial<FilterUserData>) => {
@@ -53,13 +60,7 @@ export const UserDataProvider: FC = (props) => {
     } catch (error) {
       console.warn(error);
     }
-  }, [
-    filter.gender,
-    filter.page,
-    filter.pageSize,
-    filter.sortBy,
-    filter.sortOrder,
-  ]);
+  }, [filter.gender, filter.page, filter.pageSize]);
 
   const value = { data, filter, refetch, setFilter, resetFilter };
 

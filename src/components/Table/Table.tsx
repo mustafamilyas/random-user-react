@@ -152,10 +152,10 @@ interface Props {
 }
 
 export const EnhancedTable: FC<Props> = ({ rows }) => {
-  const [order, setOrder] = React.useState<SortOrder>(SortOrder.ASC);
-  const [orderBy, setOrderBy] = React.useState<keyof UserData>("username");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const { filter, setFilter } = useUserData();
+  const { filter, setFilter, refetch } = useUserData();
+  const order = filter.sortOrder;
+  const orderBy = filter.sortBy;
 
   const page = filter.page - 1;
   const rowsPerPage = filter.pageSize;
@@ -168,8 +168,11 @@ export const EnhancedTable: FC<Props> = ({ rows }) => {
     property: keyof UserData
   ) => {
     const isAsc = orderBy === property && order === SortOrder.ASC;
-    setOrder(isAsc ? SortOrder.DSC : SortOrder.ASC);
-    setOrderBy(property);
+    setFilter({
+      sortBy: property,
+      sortOrder: isAsc ? SortOrder.DSC : SortOrder.ASC,
+    });
+    refetch();
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
